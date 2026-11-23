@@ -1,218 +1,854 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EuroValley Winter School Registration</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-/* VOICE: warm, trustworthy school office
-   IDEA: the school's printed admission slip
-   PICTURE: the Valley Crest over its mountain valley, then the form itself
-   COLOUR and TYPE: EuroValley navy, valley green, crest gold; Montserrat
-   LAYOUT: one calm column, phone first */
-:root{color-scheme:light dark;
---bg:light-dark(#F4F7FB,#0C1626);--card:light-dark(#FFFFFF,#13233B);--ink:light-dark(#16325C,#E8EEF6);
---muted:light-dark(#4A5D78,#A9B8CC);--line:light-dark(#D3DCE8,#2A3F5F);--navy:#16325C;--green:light-dark(#0B6B4F,#3DBE8F);
---gold:#F6B91A;--err:light-dark(#B3261E,#FF8A80);--field:light-dark(#FFFFFF,#0F1D31)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
-*{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Montserrat,system-ui,sans-serif;overflow-x:clip}
-.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:28px max(5vw,16px) 96px}
-.hero svg.mtn{position:absolute;left:0;bottom:0;width:100%;height:110px}
-.brand{display:flex;align-items:center;gap:14px;max-width:640px;margin:0 auto}
-.word{font-weight:900;font-size:28px;line-height:1;letter-spacing:-.5px}
-.word span{color:var(--gold)}
-.sub{font-weight:700;font-size:13px;margin-top:4px;opacity:.9}
-.tag{font-weight:700;font-size:13px;color:var(--gold)}
-.head{max-width:640px;margin:22px auto 0;position:relative}
-h1{margin:0;font-size:clamp(32px,7vw,46px);line-height:1.05;font-weight:900;text-wrap:balance}
-.lead{margin:10px 0 0;font-size:16px;color:#CFE3F5;font-weight:600}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.chips span{border:1.5px solid var(--gold);color:var(--gold);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700}
-main{max-width:640px;margin:-64px auto 40px;padding:0 max(3vw,12px);position:relative}
-.card{background:var(--card);border-radius:20px;padding:clamp(20px,4vw,32px);box-shadow:0 10px 30px rgba(22,50,92,.12);border:1px solid var(--line)}
-fieldset{border:0;margin:0 0 26px;padding:0}
-legend{font-weight:800;font-size:19px;color:var(--ink);padding:0;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-legend i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--green);color:#fff;font-style:normal;font-size:14px}
-.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-@media(max-width:560px){.row{grid-template-columns:minmax(0,1fr)}}
-.f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-label,.lbl{font-weight:700;font-size:14px;color:var(--ink)}
-.req{color:var(--err);white-space:nowrap}
-input[type=text],input[type=tel],input[type=date],select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;min-height:48px;width:100%}
-textarea{min-height:84px;resize:vertical}
-input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,.opt input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
-.hint{font-size:13px;color:var(--muted)}
-.bad input,.bad select,.bad textarea{border-color:var(--err)}
-.msg{font-size:13px;color:var(--err);font-weight:700;display:none}
-.bad .msg{display:block}
-.opts{display:flex;flex-wrap:wrap;gap:10px}
-.opt{position:relative}
-.opt input{position:absolute;opacity:0;width:1px;height:1px}
-.opt span{display:flex;align-items:center;gap:8px;min-height:46px;padding:10px 16px;border:1.5px solid var(--line);border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;background:var(--field)}
-.opt span::before{content:"";width:18px;height:18px;border-radius:5px;border:2px solid var(--muted);flex:none}
-.opt input[type=radio]+span::before{border-radius:50%}
-.opt input:checked+span{border-color:var(--green);background:light-dark(#E7F4EE,#123A2E)}
-.opt input:checked+span::before{background:var(--green);border-color:var(--green);box-shadow:inset 0 0 0 3px var(--field)}
-.classes .opt span{min-width:58px;justify-content:center}
-.classes .opt span::before{display:none}
-.agree{display:flex;gap:12px;align-items:flex-start;font-size:14px;font-weight:600;color:var(--muted)}
-.agree input{width:22px;height:22px;margin-top:2px;accent-color:var(--green);flex:none}
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0;border-radius:14px;font:inherit;font-weight:800;font-size:17px;cursor:pointer;text-decoration:none}
-.primary{background:var(--green);color:#fff}
-.wa{background:#1F8F4E;color:#fff}
-.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.err-top{display:none;background:light-dark(#FDECEA,#3A1614);color:var(--err);border-radius:12px;padding:12px 14px;font-weight:700;font-size:14px;margin-bottom:16px}
-.done{display:none}
-.done h2{margin:0 0 6px;font-size:28px;line-height:1.1;font-weight:900}
-.sum{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:16px 0;font-size:14px}
-.sum div{display:flex;gap:10px;padding:4px 0;border-bottom:1px dashed var(--line)}
-.sum div:last-child{border-bottom:0}
-.sum b{flex:0 0 42%;color:var(--muted);font-weight:700}
-.stack{display:flex;flex-direction:column;gap:10px}
-.note{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
-footer{text-align:center;font-size:13px;color:var(--muted);padding:0 16px 32px}
-@media(prefers-reduced-motion:no-preference){.card{animation:up .45s ease-out}@keyframes up{from{opacity:0;transform:translateY(14px)}}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hifz &amp; Nazirah Admission — EuroKids Kreeri</title>
+  <meta name="description"
+    content="Admission form for the evening Hifz-ul-Qur'an & Nazirah programme at EuroKids Kreeri, Baramulla. Registration fee ₹100." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green: #0B2E2A;
+      --green2: #12423B;
+      --green3: #0e3a34;
+      --gold: #C9A24B;
+      --gold2: #D8B26A;
+      --gold-bright: #EBD299;
+      --cream: #F7F1E1;
+      --cream2: #efe7d0;
+      --ink: #0a2420;
+      --maroon: #5E241F;
+      --muted: #7d8a82;
+      --line: #e2d8bd;
+      --err: #b3402f;
+      --ok: #2f7d52;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 500px at 50% -10%, rgba(201, 162, 75, .16), transparent 60%),
+        linear-gradient(180deg, #0c322d 0%, #08221e 100%);
+      min-height: 100vh;
+      padding: 24px 14px 60px;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 660px;
+      margin: 0 auto
+    }
+
+    .urdu {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      line-height: 2.2
+    }
+
+    .arabic {
+      font-family: 'Amiri', serif
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      text-align: center;
+      color: var(--cream);
+      padding: 10px 10px 26px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .hero .ayah {
+      font-size: 24px;
+      color: var(--gold-bright);
+      margin: 2px 0 8px
+    }
+
+    .hero h1 {
+      font-family: 'Amiri', serif;
+      font-weight: 700;
+      font-size: 34px;
+      margin: 6px 0 2px;
+      color: #fff
+    }
+
+    .hero .ur-title {
+      font-size: 26px;
+      color: var(--gold-bright);
+      margin: 0
+    }
+
+    .hero p {
+      color: #cdd8d0;
+      margin: 10px 0 0;
+      font-size: 15px
+    }
+
+    .rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0 4px
+    }
+
+    .rule span {
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--gold))
+    }
+
+    .rule b {
+      color: var(--gold);
+      font-size: 14px
+    }
+
+    .fee-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      background: var(--gold2);
+      color: var(--ink);
+      font-weight: 800;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+    }
+
+    .fee-badge small {
+      font-weight: 600;
+      opacity: .8
+    }
+
+    /* ---------- card ---------- */
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+      padding: 26px 22px;
+      margin-top: 8px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--maroon);
+      margin: 26px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title:first-of-type {
+      margin-top: 0
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line)
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 13.5px;
+      margin: 0 0 6px;
+      color: #33403a
+    }
+
+    .req {
+      color: var(--err)
+    }
+
+    .field {
+      margin-bottom: 16px
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    @media(max-width:480px) {
+      .row {
+        grid-template-columns: 1fr
+      }
+    }
+
+    input[type=text],
+    input[type=tel],
+    input[type=date],
+    input[type=number],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid #d9cfb4;
+      border-radius: 11px;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 162, 75, .22);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 64px
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 5px
+    }
+
+    .err-msg {
+      color: var(--err);
+      font-size: 12.5px;
+      margin-top: 5px;
+      display: none
+    }
+
+    .field.invalid input,
+    .field.invalid select {
+      border-color: var(--err)
+    }
+
+    .field.invalid .err-msg {
+      display: block
+    }
+
+    /* choice cards (program / payment) */
+    .choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    @media(max-width:480px) {
+      .choices {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .choice {
+      position: relative;
+      cursor: pointer
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      cursor: pointer
+    }
+
+    .choice .box {
+      border: 1.5px solid #d9cfb4;
+      border-radius: 12px;
+      padding: 14px;
+      background: #fff;
+      transition: all .15s;
+      height: 100%;
+    }
+
+    .choice .box b {
+      display: block;
+      font-size: 15px
+    }
+
+    .choice .box .sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 3px
+    }
+
+    .choice .box .ur {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: 15px;
+      color: #5b4a2f;
+      margin-top: 2px;
+      line-height: 1.9
+    }
+
+    .choice input:checked+.box {
+      border-color: var(--gold);
+      background: #fbf6e8;
+      box-shadow: 0 0 0 3px rgba(201, 162, 75, .18);
+    }
+
+    .choice input:focus-visible+.box {
+      box-shadow: 0 0 0 3px rgba(201, 162, 75, .4)
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 24px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      background: linear-gradient(180deg, var(--gold-bright), var(--gold2));
+      color: var(--ink);
+      box-shadow: 0 8px 22px rgba(201, 162, 75, .35);
+      transition: transform .08s, filter .15s;
+    }
+
+    .btn:hover {
+      filter: brightness(1.04)
+    }
+
+    .btn:active {
+      transform: translateY(1px)
+    }
+
+    .btn[disabled] {
+      opacity: .6;
+      cursor: not-allowed
+    }
+
+    .foot {
+      text-align: center;
+      color: #9fb0a7;
+      font-size: 12.5px;
+      margin-top: 22px;
+      line-height: 1.7
+    }
+
+    .foot .urdu {
+      font-size: 14px;
+      color: #c2cfc6
+    }
+
+    /* payment box */
+    #payBox {
+      display: none;
+      margin-top: 8px;
+      border: 1.5px dashed var(--gold);
+      border-radius: 12px;
+      padding: 16px;
+      background: #fbf6e8
+    }
+
+    #payBox.show {
+      display: block
+    }
+
+    .upi-id {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: .02em;
+      color: var(--ink)
+    }
+
+    .pay-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: var(--green2);
+      color: var(--cream);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    #qr {
+      margin: 14px auto 4px;
+      width: 160px;
+      height: 160px;
+      background: #fff;
+      padding: 8px;
+      border-radius: 10px
+    }
+
+    .cash-note {
+      display: none;
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: #5b4a2f
+    }
+
+    .cash-note.show {
+      display: block
+    }
+
+    /* success */
+    #done {
+      display: none;
+      text-align: center;
+      padding: 8px 4px
+    }
+
+    #done.show {
+      display: block
+    }
+
+    .tick {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: var(--ok);
+      margin: 6px auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .tick svg {
+      width: 38px;
+      height: 38px;
+      stroke: #fff;
+      stroke-width: 3.4;
+      fill: none
+    }
+
+    #done h2 {
+      margin: 4px 0 6px;
+      font-family: 'Amiri', serif;
+      font-size: 26px
+    }
+
+    .refpill {
+      display: inline-block;
+      background: #eef4ef;
+      border: 1px solid #cfe0d4;
+      color: #22503a;
+      font-weight: 800;
+      padding: 8px 16px;
+      border-radius: 999px;
+      margin: 8px 0 4px;
+      letter-spacing: .04em
+    }
+
+    .banner-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      background: #222;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+      z-index: 50;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1
+    }
+  </style>
 </head>
+
 <body>
-<header class="hero">
-<svg class="mtn" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
-<polygon points="0,110 0,70 180,20 320,64 520,4 700,60 860,24 1040,72 1200,36 1200,110" fill="#2F6DB3" fill-opacity=".35"/>
-<path d="M0 92 C240 72 420 104 640 88 C860 72 1000 70 1200 84 V110 H0 Z" fill="#0B6B4F" fill-opacity=".55"/>
-</svg>
-<div class="brand">
-<svg role="img" aria-label="EuroValley crest" width="56" height="67" viewBox="0 0 200 240"><defs><clipPath id="cr"><path d="M100 6 L190 30 V120 C190 180 150 215 100 234 C50 215 10 180 10 120 V30 Z"/></clipPath></defs><path d="M100 6 L190 30 V120 C190 180 150 215 100 234 C50 215 10 180 10 120 V30 Z" fill="#16325C"/><g clip-path="url(#cr)"><circle cx="130" cy="92" r="24" fill="#F6B91A"/><polygon points="-10,172 58,88 92,132 124,98 210,172 210,240 -10,240" fill="#2F6DB3"/><polygon points="58,88 45,104 53,101 61,110 71,100" fill="#FFFFFF"/><polygon points="124,98 111,113 119,110 127,118 136,110" fill="#FFFFFF"/><path d="M0 166 C40 150 70 176 100 168 C130 160 160 150 200 162 V240 H0 Z" fill="#0B6B4F"/><path d="M100 214 C84 204 62 201 44 205 V180 C62 176 84 179 100 190 Z" fill="#FFFFFF"/><path d="M100 214 C116 204 138 201 156 205 V180 C138 176 116 179 100 190 Z" fill="#FFFFFF"/><path d="M100 190 V214" stroke="#16325C" stroke-width="2.5"/></g><path d="M100 6 L190 30 V120 C190 180 150 215 100 234 C50 215 10 180 10 120 V30 Z" fill="none" stroke="#F6B91A" stroke-width="8"/></svg>
-<div><div class="word">Euro<span>Valley</span></div><div class="sub">International School · Kreeri</div><div class="tag">Learn Today, Lead Tomorrow!</div></div>
-</div>
-<div class="head">
-<h1>Winter School 2026 registration</h1>
-<p class="lead">For Classes 1st to 8th. Fill in the form below; it takes about two minutes.</p>
-<div class="chips"><span>Skill-based learning</span><span>Tuition</span><span>Maktab</span><span>Transport</span><span>Heated classrooms</span><span>Under CCTV</span></div>
-</div>
-</header>
+  <div class="wrap">
 
-<main>
-<div class="card">
-<form id="form" novalidate>
-<div class="err-top" id="errTop" role="alert">Please fill in the highlighted fields.</div>
+    <!-- HERO -->
+    <header class="hero">
+      <div class="eyebrow">EuroKids Kreeri · Baramulla</div>
+      <div class="ayah arabic">رَبِّ زِدْنِي عِلْمًا</div>
+      <h1>Hifz &amp; Nazirah Admission</h1>
+      <p class="ur-title urdu">حفظ و ناظرہ داخلہ فارم</p>
+      <div class="rule"><span></span><b>✦</b><span></span></div>
+      <p>Evening programme · After Asr until Maghrib · شام کا پروگرام</p>
+      <div class="fee-badge">Registration Fee&nbsp; ₹100 <small>/ رجسٹریشن فیس</small></div>
+    </header>
 
-<fieldset>
-<legend><i>1</i>Student details</legend>
-<div class="f" data-req><label for="sname">Student's full name <span class="req">*</span></label><input type="text" id="sname" autocomplete="off"><span class="msg">Enter the student's name.</span></div>
-<div class="row">
-<div class="f" data-req><span class="lbl" id="gl">Gender <span class="req">*</span></span><div class="opts" role="radiogroup" aria-labelledby="gl"><label class="opt"><input type="radio" name="gender" value="Boy"><span>Boy</span></label><label class="opt"><input type="radio" name="gender" value="Girl"><span>Girl</span></label></div><span class="msg">Choose one.</span></div>
-<div class="f"><label for="dob">Date of birth</label><input type="date" id="dob"></div>
-</div>
-<div class="f classes" data-req><span class="lbl" id="cl">Class in 2026–27 session <span class="req">*</span></span><div class="opts" role="radiogroup" aria-labelledby="cl" id="classOpts"></div><span class="msg">Choose a class.</span></div>
-<div class="f"><label for="school">Current school</label><input type="text" id="school" autocomplete="off"></div>
-</fieldset>
+    <!-- FORM -->
+    <main class="card" id="card">
+      <form id="form" novalidate>
 
-<fieldset>
-<legend><i>2</i>Parent / guardian</legend>
-<div class="f" data-req><label for="father">Father's / guardian's name <span class="req">*</span></label><input type="text" id="father" autocomplete="off"><span class="msg">Enter a parent or guardian's name.</span></div>
-<div class="f"><label for="mother">Mother's name</label><input type="text" id="mother" autocomplete="off"></div>
-<div class="row">
-<div class="f" data-req data-phone><label for="phone">Mobile number <span class="req">*</span></label><input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="10-digit number"><span class="msg">Enter a 10-digit mobile number.</span></div>
-<div class="f" data-phone-opt><label for="wa">WhatsApp number</label><input type="tel" id="wa" inputmode="numeric" maxlength="13" placeholder="If different"><span class="msg">Enter a 10-digit number or leave blank.</span></div>
-</div>
-<div class="f" data-req><label for="addr">Address / village <span class="req">*</span></label><textarea id="addr"></textarea><span class="msg">Enter your address or village.</span></div>
-</fieldset>
+        <div class="section-title">Student details</div>
 
-<fieldset>
-<legend><i>3</i>Programmes</legend>
-<div class="f" data-req><span class="lbl" id="pl">Register for <span class="req">*</span></span><span class="hint">Choose one or more.</span><div class="opts" aria-labelledby="pl">
-<label class="opt"><input type="checkbox" name="prog" value="Winter School (skills)" checked><span>Winter School (skills)</span></label>
-<label class="opt"><input type="checkbox" name="prog" value="Tuition"><span>Tuition</span></label>
-<label class="opt"><input type="checkbox" name="prog" value="Maktab"><span>Maktab</span></label>
-</div><span class="msg">Choose at least one programme.</span></div>
-<div class="f" id="skillWrap"><span class="lbl" id="sl">Skills to opt for <span class="req">*</span></span><span class="hint">Choose the skills your child should join. Basics of AI is for Classes 6th to 8th.</span><div class="opts" aria-labelledby="sl" id="skillOpts"></div>
-<label class="opt"><input type="checkbox" id="allSkills"><span>Select all skills</span></label><span class="msg">Choose at least one skill.</span></div>
-<div class="f" data-req><span class="lbl" id="tl">Transport needed? <span class="req">*</span></span><div class="opts" role="radiogroup" aria-labelledby="tl"><label class="opt"><input type="radio" name="trans" value="Yes"><span>Yes</span></label><label class="opt"><input type="radio" name="trans" value="No"><span>No</span></label></div><span class="msg">Choose one.</span></div>
-<div class="f" id="pickWrap" hidden><label for="pick">Pick-up point</label><input type="text" id="pick" autocomplete="off" placeholder="Nearest landmark"></div>
-<div class="f"><label for="notes">Anything we should know?</label><textarea id="notes" placeholder="Health needs, timings, questions"></textarea></div>
-</fieldset>
+        <div class="field" data-for="student_name">
+          <label>Student's full name <span class="req">*</span></label>
+          <input type="text" name="student_name" autocomplete="off" placeholder="e.g. Muhammad Bilal" />
+          <div class="err-msg">Please enter the student's name.</div>
+        </div>
 
-<div class="f" data-req><label class="agree"><input type="checkbox" id="agree"><span>I confirm these details are correct and the school may contact me about this registration.</span></label><span class="msg">Please tick to confirm.</span></div>
+        <div class="row">
+          <div class="field" data-for="dob">
+            <label>Date of birth <span class="req">*</span></label>
+            <input type="date" name="dob" />
+            <div class="hint" id="ageHint"></div>
+            <div class="err-msg">Please select date of birth.</div>
+          </div>
+          <div class="field" data-for="gender">
+            <label>Gender</label>
+            <select name="gender">
+              <option value="">Select…</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+        </div>
 
-<button class="btn primary" type="submit">Review and send registration</button>
-</form>
+        <div class="section-title">Programme</div>
+        <div class="field" data-for="program">
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="program" value="Hifz" />
+              <div class="box">
+                <b>Hifz-ul-Qur'an</b>
+                <div class="ur urdu">حفظِ قرآن</div>
+                <div class="sub">Full memorisation of the Qur'an</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="program" value="Nazirah" />
+              <div class="box">
+                <b>Nazirah</b>
+                <div class="ur urdu">ناظرہ</div>
+                <div class="sub">Reading the Qur'an correctly</div>
+              </div>
+            </label>
+          </div>
+          <div class="err-msg" style="margin-top:8px">Please choose a programme.</div>
+        </div>
 
-<section class="done" id="done" aria-live="polite">
-<h2>Almost done</h2>
-<p style="margin:0;color:var(--muted)">Check the details, then tap the green button to send them to the school on WhatsApp. Your registration is complete once you press send in WhatsApp.</p>
-<div class="sum" id="sum"></div>
-<div class="stack">
-<a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Send on WhatsApp</a>
-<button class="btn ghost" type="button" id="copyBtn">Copy details</button>
-<button class="btn ghost" type="button" id="editBtn">Edit details</button>
-</div>
-<p class="note" id="copyNote">If WhatsApp doesn't open, copy the details and send them to 88990 08808.</p>
-</section>
-</div>
-</main>
-<footer>EuroValley International School, Kreeri, Baramulla · Call or WhatsApp 88990 08808</footer>
+        <div class="section-title">Parent / Guardian &amp; location</div>
 
-<script>
-{
-const NUM='918899008808';
-const $=id=>document.getElementById(id);
-const classes=['1st','2nd','3rd','4th','5th','6th','7th','8th'];
-$('classOpts').innerHTML=classes.map(c=>`<label class="opt"><input type="radio" name="cls" value="${c}"><span>${c}</span></label>`).join('');
-const skillList=['Spoken English','Mental Math','Reading Club','Intro to Coding','Basics of AI','Spelling Bee & Quiz','Manners & Etiquette'];
-$('skillOpts').innerHTML=skillList.map(s=>`<label class="opt"><input type="checkbox" name="skill" value="${s.replace('&','&amp;')}"><span>${s.replace('&','&amp;')}</span></label>`).join('');
-const skills=()=>[...document.querySelectorAll('input[name=skill]:checked')].map(i=>i.value);
-const wsOn=()=>!!document.querySelector('input[name=prog][value^="Winter"]:checked');
-const syncSkills=()=>{$('skillWrap').hidden=!wsOn()};
-document.querySelectorAll('input[name=prog]').forEach(i=>i.addEventListener('change',syncSkills));
-$('allSkills').addEventListener('change',e=>{document.querySelectorAll('input[name=skill]').forEach(i=>{i.checked=e.target.checked});$('skillWrap').classList.remove('bad')});
-document.getElementById('skillOpts').addEventListener('change',()=>{$('allSkills').checked=skills().length===skillList.length});
-syncSkills();
-const val=id=>$(id).value.trim();
-const radio=n=>(document.querySelector(`input[name=${n}]:checked`)||{}).value||'';
-const progs=()=>[...document.querySelectorAll('input[name=prog]:checked')].map(i=>i.value);
-const digits=s=>s.replace(/\D/g,'').replace(/^(91|0)(?=\d{10}$)/,'');
-document.querySelectorAll('input[name=trans]').forEach(r=>r.addEventListener('change',()=>{$('pickWrap').hidden=radio('trans')!=='Yes'}));
+        <div class="row">
+          <div class="field" data-for="guardian_name">
+            <label>Father's / Guardian's name <span class="req">*</span></label>
+            <input type="text" name="guardian_name" placeholder="e.g. Abdul Rashid" />
+            <div class="err-msg">Please enter parent / guardian name.</div>
+          </div>
+          <div class="field" data-for="relation">
+            <label>Relation</label>
+            <select name="relation">
+              <option>Father</option>
+              <option>Mother</option>
+              <option>Guardian</option>
+            </select>
+          </div>
+        </div>
 
-const checks=[
- ['sname',()=>val('sname')],['gender',()=>radio('gender')],['cls',()=>radio('cls')],
- ['father',()=>val('father')],['phone',()=>digits(val('phone')).length===10],
- ['addr',()=>val('addr')],['prog',()=>progs().length],['skill',()=>!wsOn()||skills().length],['trans',()=>radio('trans')],['agree',()=>$('agree').checked]
-];
-const wrapOf=k=>{const el=$(k)||document.querySelector(`input[name=${k}]`);return el.closest('.f')};
-document.getElementById('form').addEventListener('input',e=>{const f=e.target.closest('.f');if(f)f.classList.remove('bad')});
+        <div class="field" data-for="phone">
+          <label>Contact number (Call / WhatsApp) <span class="req">*</span></label>
+          <input type="tel" name="phone" inputmode="numeric" placeholder="10-digit mobile number" />
+          <div class="err-msg">Please enter a valid 10-digit mobile number.</div>
+        </div>
 
-let text='';
-$('form').addEventListener('submit',e=>{
- e.preventDefault();
- let first=null;
- for(const [k,ok] of checks){const w=wrapOf(k);if(!ok()){w.classList.add('bad');first=first||w}else w.classList.remove('bad')}
- const waw=$('wa').closest('.f'),wd=digits(val('wa'));
- if(val('wa')&&wd.length!==10){waw.classList.add('bad');first=first||waw}else waw.classList.remove('bad');
- $('errTop').style.display=first?'block':'none';
- if(first){first.scrollIntoView({behavior:'smooth',block:'center'});return}
- const dob=val('dob')?val('dob').split('-').reverse().join('/'):'';
- const rows=[
-  ['Student',val('sname')],['Gender',radio('gender')],['Date of birth',dob],['Class',radio('cls')],['Current school',val('school')],
-  ['Father / guardian',val('father')],['Mother',val('mother')],['Mobile',digits(val('phone'))],['WhatsApp',wd],
-  ['Address',val('addr')],['Programmes',progs().join(', ')],['Skills',wsOn()?skills().join(', '):''],['Transport',radio('trans')+(radio('trans')==='Yes'&&val('pick')?` (pick-up: ${val('pick')})`:'')],
-  ['Notes',val('notes')]
- ].filter(r=>r[1]);
- const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
- $('sum').innerHTML=rows.map(([k,v])=>`<div><b>${k}</b><span>${esc(v)}</span></div>`).join('');
- text='*Winter School 2026 Registration*\nEuroValley International School, Kreeri\n\n'+rows.map(([k,v])=>`${k}: ${v}`).join('\n');
- $('waBtn').href=`https://wa.me/${NUM}?text=${encodeURIComponent(text)}`;
- $('form').style.display='none';$('done').style.display='block';
- $('done').scrollIntoView({behavior:'smooth',block:'start'});
-});
-$('editBtn').addEventListener('click',()=>{$('done').style.display='none';$('form').style.display='block';$('form').scrollIntoView({behavior:'smooth'})});
-$('copyBtn').addEventListener('click',async()=>{
- try{await navigator.clipboard.writeText(text);$('copyNote').textContent='Details copied. Paste them in WhatsApp to 88990 08808.'}
- catch(_){$('copyNote').textContent='Copy is not available here. Please take a screenshot and send it to 88990 08808.'}
-});
-}
-</script>
+        <div class="row">
+          <div class="field" data-for="village">
+            <label>Village / Town <span class="req">*</span></label>
+            <input type="text" name="village" placeholder="e.g. Kreeri" />
+            <div class="err-msg">Please enter your village / town.</div>
+          </div>
+          <div class="field" data-for="district">
+            <label>District</label>
+            <input type="text" name="district" value="Baramulla" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Full address (optional)</label>
+          <textarea name="address" placeholder="Mohalla, landmark…"></textarea>
+        </div>
+
+        <div class="section-title">Payment · ₹100</div>
+        <div class="field" data-for="payment_method">
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="payment_method" value="UPI" />
+              <div class="box">
+                <b>Pay online (UPI)</b>
+                <div class="sub">GPay · PhonePe · Paytm</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="payment_method" value="Cash" />
+              <div class="box">
+                <b>Cash at center</b>
+                <div class="sub">Pay ₹100 on admission day</div>
+              </div>
+            </label>
+          </div>
+          <div class="err-msg" style="margin-top:8px">Please select a payment option.</div>
+
+          <!-- UPI panel -->
+          <div id="payBox">
+            <div>Pay <b>₹100</b> to:</div>
+            <div class="upi-id" id="upiIdText">—</div>
+            <div id="qr"></div>
+            <div class="hint" style="text-align:center">Scan with any UPI app, or tap below on mobile</div>
+            <div style="text-align:center"><a class="pay-btn" id="upiLink" href="#">Pay ₹100 via UPI</a></div>
+            <div class="field" style="margin-top:14px">
+              <label>UPI reference / UTR number (after paying)</label>
+              <input type="text" name="payment_ref" placeholder="12-digit transaction id (optional now)" />
+              <div class="hint">You can also submit now and pay shortly after — we'll confirm on WhatsApp.</div>
+            </div>
+          </div>
+          <div class="cash-note" id="cashNote">
+            Please bring <b>₹100</b> in cash to EuroKids Kreeri on the admission day. Your seat is noted as <b>pending
+              payment</b>.
+          </div>
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn">Submit admission · داخلہ جمع کریں</button>
+      </form>
+
+      <!-- SUCCESS -->
+      <div id="done">
+        <div class="tick"><svg viewBox="0 0 24 24">
+            <path d="M4 12.5l5 5L20 6" />
+          </svg></div>
+        <h2>Admission submitted</h2>
+        <p class="urdu" style="font-size:18px;color:#33403a">آپ کا داخلہ موصول ہو گیا — جزاک اللہ</p>
+        <div class="refpill" id="refText">—</div>
+        <p id="doneMsg" style="color:#41514a;margin-top:10px"></p>
+        <p class="banner-note">EuroKids Kreeri will contact you on WhatsApp to confirm timing and seat.</p>
+      </div>
+    </main>
+
+    <div class="foot">
+      <div class="urdu">یوروکڈز کریری · کریری، بارہمولہ، جموں و کشمیر</div>
+      Evening Hifz &amp; Nazirah · Asr to Maghrib
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Supabase JS (loads in the visitor's browser) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- QR generator -->
+  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@04f46c6/qrcode.min.js"></script>
+  <script>
+    /* ============================================================
+       CONFIG  —  edit these 5 lines, then deploy.
+       ============================================================ */
+    const CONFIG = {
+      // 1) Supabase (records every submission). Leave blank to use WhatsApp only.
+      SUPABASE_URL: "https://jkymvigwbriuzzsmkpxi.supabase.co",
+      SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpreW12aWd3YnJpdXp6c21rcHhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxMzcyNDQsImV4cCI6MjA5NzcxMzI0NH0.49uBfqjbssWl2yn14auaXt-pZ-FLN66IrMH5L-ldTQY",   // your project's anon public key
+
+      // 2) UPI ID that receives the ₹100 fee
+      UPI_ID: "s1n6oyc@pty",
+      UPI_NAME: "EuroKids Kreeri",
+
+      // 3) WhatsApp number to receive submissions (used as fallback + confirmation)
+      //    Country code, no +, no spaces.  e.g. India 10-digit -> "9190XXXXXXXX"
+      WHATSAPP: "+917045599019",
+
+      FEE: 100,
+      TABLE: "hifz_admissions"
+    };
+    /* ============================================================ */
+
+    const $ = s => document.querySelector(s);
+    const form = $('#form');
+
+    // supabase client (only if configured)
+    let sb = null;
+    if (CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY && window.supabase) {
+      sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    }
+
+    // ---- age from DOB ----
+    const dob = form.dob, ageHint = $('#ageHint');
+    let computedAge = null;
+    dob.addEventListener('change', () => {
+      if (!dob.value) { ageHint.textContent = ''; computedAge = null; return; }
+      const b = new Date(dob.value), n = new Date();
+      let a = n.getFullYear() - b.getFullYear();
+      const m = n.getMonth() - b.getMonth();
+      if (m < 0 || (m === 0 && n.getDate() < b.getDate())) a--;
+      computedAge = a;
+      ageHint.textContent = a >= 0 ? `Age: ${a} years` : '';
+    });
+
+    // ---- payment panel toggle ----
+    const payBox = $('#payBox'), cashNote = $('#cashNote');
+    function buildUpi() {
+      const name = (form.student_name.value || 'Student').trim();
+      $('#upiIdText').textContent = CONFIG.UPI_ID;
+      const url = `upi://pay?pa=${encodeURIComponent(CONFIG.UPI_ID)}&pn=${encodeURIComponent(CONFIG.UPI_NAME)}&am=${CONFIG.FEE}&cu=INR&tn=${encodeURIComponent('Hifz/Nazirah admission')}`;
+      $('#upiLink').setAttribute('href', url);
+      const box = $('#qr'); box.innerHTML = '';
+      try { new QRCode(box, { text: url, width: 160, height: 160, correctLevel: QRCode.CorrectLevel.M }); }
+      catch (e) { box.textContent = 'QR unavailable'; }
+    }
+    form.querySelectorAll('input[name=payment_method]').forEach(r => {
+      r.addEventListener('change', () => {
+        if (r.value === 'UPI' && r.checked) { payBox.classList.add('show'); cashNote.classList.remove('show'); buildUpi(); }
+        if (r.value === 'Cash' && r.checked) { cashNote.classList.add('show'); payBox.classList.remove('show'); }
+      });
+    });
+
+    // ---- validation helpers ----
+    function setInvalid(name, bad) {
+      const f = form.querySelector(`[data-for="${name}"]`);
+      if (f) f.classList.toggle('invalid', bad);
+    }
+    function val(n) { const el = form[n]; return el ? (el.value || '').trim() : ''; }
+    function checked(n) { const el = form.querySelector(`input[name=${n}]:checked`); return el ? el.value : ''; }
+
+    function validate() {
+      let ok = true;
+      const reqText = ['student_name', 'guardian_name', 'village'];
+      reqText.forEach(n => { const bad = !val(n); setInvalid(n, bad); if (bad) ok = false; });
+
+      const badDob = !val('dob'); setInvalid('dob', badDob); if (badDob) ok = false;
+
+      const phone = val('phone').replace(/\D/g, '');
+      const badPhone = phone.length < 10; setInvalid('phone', badPhone); if (badPhone) ok = false;
+
+      const badProg = !checked('program'); setInvalid('program', badProg); if (badProg) ok = false;
+      const badPay = !checked('payment_method'); setInvalid('payment_method', badPay); if (badPay) ok = false;
+
+      if (!ok) {
+        const first = form.querySelector('.invalid');
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return ok;
+    }
+
+    function toast(msg) {
+      const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    function makeRef() {
+      const d = new Date();
+      const p = n => String(n).padStart(2, '0');
+      const rnd = Math.floor(Math.random() * 900 + 100);
+      return `EK-${p(d.getFullYear() % 100)}${p(d.getMonth() + 1)}${p(d.getDate())}-${rnd}`;
+    }
+
+    function summaryText(rec) {
+      return [
+        '🕌 *Hifz/Nazirah Admission* — EuroKids Kreeri',
+        `Ref: ${rec.ref}`,
+        `Student: ${rec.student_name}`,
+        `DOB: ${rec.dob}  (Age ${rec.age ?? '-'})`,
+        `Programme: ${rec.program}`,
+        `Guardian: ${rec.guardian_name} (${rec.relation})`,
+        `Phone: ${rec.phone}`,
+        `Location: ${rec.village}, ${rec.district}`,
+        rec.address ? `Address: ${rec.address}` : '',
+        `Payment: ${rec.payment_method} · ₹${CONFIG.FEE}${rec.payment_ref ? ' · UTR ' + rec.payment_ref : ''}`
+      ].filter(Boolean).join('\n');
+    }
+
+    function showDone(ref, paymentMethod) {
+      form.style.display = 'none';
+      $('#done').classList.add('show');
+      $('#refText').textContent = 'Reference: ' + ref;
+      $('#doneMsg').innerHTML = paymentMethod === 'UPI'
+        ? `If you haven't paid yet, please complete the <b>₹${CONFIG.FEE}</b> UPI payment to <b>${CONFIG.UPI_ID}</b>.`
+        : `Please bring <b>₹${CONFIG.FEE}</b> cash on admission day.`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- submit ----
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+
+      const btn = $('#submitBtn');
+      btn.disabled = true; btn.textContent = 'Submitting…';
+
+      const ref = makeRef();
+      const rec = {
+        ref,
+        student_name: val('student_name'),
+        gender: val('gender') || null,
+        dob: val('dob'),
+        age: computedAge,
+        program: checked('program'),
+        guardian_name: val('guardian_name'),
+        relation: val('relation'),
+        phone: val('phone').replace(/\D/g, ''),
+        village: val('village'),
+        district: val('district') || null,
+        address: val('address') || null,
+        payment_method: checked('payment_method'),
+        payment_ref: val('payment_ref') || null,
+        payment_status: 'pending',
+        fee_amount: CONFIG.FEE
+      };
+
+      let saved = false;
+      if (sb) {
+        try {
+          const { error } = await sb.from(CONFIG.TABLE).insert(rec);
+          if (error) throw error;
+          saved = true;
+        } catch (err) {
+          console.error('Supabase insert failed:', err);
+          toast('Saved offline — sending via WhatsApp instead.');
+        }
+      }
+
+      // WhatsApp: fallback when no DB, or always-on confirmation if number set
+      if ((!saved && CONFIG.WHATSAPP) || (saved && CONFIG.WHATSAPP)) {
+        const wa = `https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(summaryText(rec))}`;
+        window.open(wa, '_blank');
+      } else if (!saved && !CONFIG.WHATSAPP) {
+        toast('Not configured yet — see README to add Supabase or WhatsApp.');
+        btn.disabled = false; btn.textContent = 'Submit admission · داخلہ جمع کریں';
+        return;
+      }
+
+      showDone(ref, rec.payment_method);
+    });
+  </script>
 </body>
+
 </html>
