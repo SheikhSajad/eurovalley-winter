@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EuroValley Winter School Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, trustworthy school office
+   IDEA: the school's printed admission slip
+   PICTURE: the Valley Crest over its mountain valley, then the form itself
+   COLOUR and TYPE: EuroValley navy, valley green, crest gold; Montserrat
+   LAYOUT: one calm column, phone first */
+:root{color-scheme:light dark;
+--bg:light-dark(#F4F7FB,#0C1626);--card:light-dark(#FFFFFF,#13233B);--ink:light-dark(#16325C,#E8EEF6);
+--muted:light-dark(#4A5D78,#A9B8CC);--line:light-dark(#D3DCE8,#2A3F5F);--navy:#16325C;--green:light-dark(#0B6B4F,#3DBE8F);
+--gold:#F6B91A;--err:light-dark(#B3261E,#FF8A80);--field:light-dark(#FFFFFF,#0F1D31)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Montserrat,system-ui,sans-serif;overflow-x:clip}
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:28px max(5vw,16px) 96px}
+.hero svg.mtn{position:absolute;left:0;bottom:0;width:100%;height:110px}
+.brand{display:flex;align-items:center;gap:14px;max-width:640px;margin:0 auto}
+.word{font-weight:900;font-size:28px;line-height:1;letter-spacing:-.5px}
+.word span{color:var(--gold)}
+.sub{font-weight:700;font-size:13px;margin-top:4px;opacity:.9}
+.tag{font-weight:700;font-size:13px;color:var(--gold)}
+.head{max-width:640px;margin:22px auto 0;position:relative}
+h1{margin:0;font-size:clamp(32px,7vw,46px);line-height:1.05;font-weight:900;text-wrap:balance}
+.lead{margin:10px 0 0;font-size:16px;color:#CFE3F5;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chips span{border:1.5px solid var(--gold);color:var(--gold);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700}
+main{max-width:640px;margin:-64px auto 40px;padding:0 max(3vw,12px);position:relative}
+.card{background:var(--card);border-radius:20px;padding:clamp(20px,4vw,32px);box-shadow:0 10px 30px rgba(22,50,92,.12);border:1px solid var(--line)}
+fieldset{border:0;margin:0 0 26px;padding:0}
+legend{font-weight:800;font-size:19px;color:var(--ink);padding:0;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+legend i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--green);color:#fff;font-style:normal;font-size:14px}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:560px){.row{grid-template-columns:minmax(0,1fr)}}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+label,.lbl{font-weight:700;font-size:14px;color:var(--ink)}
+.req{color:var(--err);white-space:nowrap}
+input[type=text],input[type=tel],input[type=date],select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;min-height:48px;width:100%}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,.opt input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.hint{font-size:13px;color:var(--muted)}
+.bad input,.bad select,.bad textarea{border-color:var(--err)}
+.msg{font-size:13px;color:var(--err);font-weight:700;display:none}
+.bad .msg{display:block}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt span{display:flex;align-items:center;gap:8px;min-height:46px;padding:10px 16px;border:1.5px solid var(--line);border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;background:var(--field)}
+.opt span::before{content:"";width:18px;height:18px;border-radius:5px;border:2px solid var(--muted);flex:none}
+.opt input[type=radio]+span::before{border-radius:50%}
+.opt input:checked+span{border-color:var(--green);background:light-dark(#E7F4EE,#123A2E)}
+.opt input:checked+span::before{background:var(--green);border-color:var(--green);box-shadow:inset 0 0 0 3px var(--field)}
+.classes .opt span{min-width:58px;justify-content:center}
+.classes .opt span::before{display:none}
+.agree{display:flex;gap:12px;align-items:flex-start;font-size:14px;font-weight:600;color:var(--muted)}
+.agree input{width:22px;height:22px;margin-top:2px;accent-color:var(--green);flex:none}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0;border-radius:14px;font:inherit;font-weight:800;font-size:17px;cursor:pointer;text-decoration:none}
+.primary{background:var(--green);color:#fff}
+.wa{background:#1F8F4E;color:#fff}
+.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.err-top{display:none;background:light-dark(#FDECEA,#3A1614);color:var(--err);border-radius:12px;padding:12px 14px;font-weight:700;font-size:14px;margin-bottom:16px}
+.done{display:none}
+.done h2{margin:0 0 6px;font-size:28px;line-height:1.1;font-weight:900}
+.sum{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:16px 0;font-size:14px}
+.sum div{display:flex;gap:10px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.sum div:last-child{border-bottom:0}
+.sum b{flex:0 0 42%;color:var(--muted);font-weight:700}
+.stack{display:flex;flex-direction:column;gap:10px}
+.note{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
+footer{text-align:center;font-size:13px;color:var(--muted);padding:0 16px 32px}
+@media(prefers-reduced-motion:no-preference){.card{animation:up .45s ease-out}@keyframes up{from{opacity:0;transform:translateY(14px)}}}
+</style>
+</head>
+<body>
+<header class="hero">
+<svg class="mtn" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+<polygon points="0,110 0,70 180,20 320,64 520,4 700,60 860,24 1040,72 1200,36 1200,110" fill="#2F6DB3" fill-opacity=".35"/>
+<path d="M0 92 C240 72 420 104 640 88 C860 72 1000 70 1200 84 V110 H0 Z" fill="#0B6B4F" fill-opacity=".55"/>
+</svg>
+<div class="brand">
+<svg role="img" aria-label="EuroValley crest" width="56" height="67" viewBox="0 0 200 240"><defs><clipPath id="cr"><path d="M100 6 L190 30 V120 C190 180 150 215 100 234 C50 215 10 180 10 120 V30 Z"/></clipPath></defs><path d="M100 6 L190 30 V120 C190 180 150 215 100 234 C50 215 10 180 10 120 V30 Z" fill="#16325C"/><g clip-path="url(#cr)"><circle cx="130" cy="92" r="24" fill="#F6B91A"/><polygon points="-10,172 58,88 92,132 124,98 210,172 210,240 -10,240" fill="#2F6DB3"/><polygon points="58,88 45,104 53,101 61,110 71,100" fill="#FFFFFF"/><polygon points="124,98 111,113 119,110 127,118 136,110" fill="#FFFFFF"/><path d="M0 166 C40 150 70 176 100 168 C130 160 160 150 200 162 V240 H0 Z" fill="#0B6B4F"/><path d="M100 214 C84 204 62 201 44 205 V180 C62 176 84 179 100 190 Z" fill="#FFFFFF"/><path d="M100 214 C116 204 138 201 156 205 V180 C138 176 116 179 100 190 Z" fill="#FFFFFF"/><path d="M100 190 V214" stroke="#16325C" stroke-width="2.5"/></g><path d="M100 6 L190 30 V120 C190 180 150 215 100 234 C50 215 10 180 10 120 V30 Z" fill="none" stroke="#F6B91A" stroke-width="8"/></svg>
+<div><div class="word">Euro<span>Valley</span></div><div class="sub">International School · Kreeri</div><div class="tag">Learn Today, Lead Tomorrow!</div></div>
+</div>
+<div class="head">
+<h1>Winter School 2026 registration</h1>
+<p class="lead">For Classes 1st to 8th. Fill in the form below; it takes about two minutes.</p>
+<div class="chips"><span>Skill-based learning</span><span>Tuition</span><span>Maktab</span><span>Transport</span><span>Heated classrooms</span><span>Under CCTV</span></div>
+</div>
+</header>
+
+<main>
+<div class="card">
+<form id="form" novalidate>
+<div class="err-top" id="errTop" role="alert">Please fill in the highlighted fields.</div>
+
+<fieldset>
+<legend><i>1</i>Student details</legend>
+<div class="f" data-req><label for="sname">Student's full name <span class="req">*</span></label><input type="text" id="sname" autocomplete="off"><span class="msg">Enter the student's name.</span></div>
+<div class="row">
+<div class="f" data-req><span class="lbl" id="gl">Gender <span class="req">*</span></span><div class="opts" role="radiogroup" aria-labelledby="gl"><label class="opt"><input type="radio" name="gender" value="Boy"><span>Boy</span></label><label class="opt"><input type="radio" name="gender" value="Girl"><span>Girl</span></label></div><span class="msg">Choose one.</span></div>
+<div class="f"><label for="dob">Date of birth</label><input type="date" id="dob"></div>
+</div>
+<div class="f classes" data-req><span class="lbl" id="cl">Class in 2026–27 session <span class="req">*</span></span><div class="opts" role="radiogroup" aria-labelledby="cl" id="classOpts"></div><span class="msg">Choose a class.</span></div>
+<div class="f"><label for="school">Current school</label><input type="text" id="school" autocomplete="off"></div>
+</fieldset>
+
+<fieldset>
+<legend><i>2</i>Parent / guardian</legend>
+<div class="f" data-req><label for="father">Father's / guardian's name <span class="req">*</span></label><input type="text" id="father" autocomplete="off"><span class="msg">Enter a parent or guardian's name.</span></div>
+<div class="f"><label for="mother">Mother's name</label><input type="text" id="mother" autocomplete="off"></div>
+<div class="row">
+<div class="f" data-req data-phone><label for="phone">Mobile number <span class="req">*</span></label><input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="10-digit number"><span class="msg">Enter a 10-digit mobile number.</span></div>
+<div class="f" data-phone-opt><label for="wa">WhatsApp number</label><input type="tel" id="wa" inputmode="numeric" maxlength="13" placeholder="If different"><span class="msg">Enter a 10-digit number or leave blank.</span></div>
+</div>
+<div class="f" data-req><label for="addr">Address / village <span class="req">*</span></label><textarea id="addr"></textarea><span class="msg">Enter your address or village.</span></div>
+</fieldset>
+
+<fieldset>
+<legend><i>3</i>Programmes</legend>
+<div class="f" data-req><span class="lbl" id="pl">Register for <span class="req">*</span></span><span class="hint">Choose one or more.</span><div class="opts" aria-labelledby="pl">
+<label class="opt"><input type="checkbox" name="prog" value="Winter School (skills)" checked><span>Winter School (skills)</span></label>
+<label class="opt"><input type="checkbox" name="prog" value="Tuition"><span>Tuition</span></label>
+<label class="opt"><input type="checkbox" name="prog" value="Maktab"><span>Maktab</span></label>
+</div><span class="msg">Choose at least one programme.</span></div>
+<div class="f" id="skillWrap"><span class="lbl" id="sl">Skills to opt for <span class="req">*</span></span><span class="hint">Choose the skills your child should join. Basics of AI is for Classes 6th to 8th.</span><div class="opts" aria-labelledby="sl" id="skillOpts"></div>
+<label class="opt"><input type="checkbox" id="allSkills"><span>Select all skills</span></label><span class="msg">Choose at least one skill.</span></div>
+<div class="f" data-req><span class="lbl" id="tl">Transport needed? <span class="req">*</span></span><div class="opts" role="radiogroup" aria-labelledby="tl"><label class="opt"><input type="radio" name="trans" value="Yes"><span>Yes</span></label><label class="opt"><input type="radio" name="trans" value="No"><span>No</span></label></div><span class="msg">Choose one.</span></div>
+<div class="f" id="pickWrap" hidden><label for="pick">Pick-up point</label><input type="text" id="pick" autocomplete="off" placeholder="Nearest landmark"></div>
+<div class="f"><label for="notes">Anything we should know?</label><textarea id="notes" placeholder="Health needs, timings, questions"></textarea></div>
+</fieldset>
+
+<div class="f" data-req><label class="agree"><input type="checkbox" id="agree"><span>I confirm these details are correct and the school may contact me about this registration.</span></label><span class="msg">Please tick to confirm.</span></div>
+
+<button class="btn primary" type="submit">Review and send registration</button>
+</form>
+
+<section class="done" id="done" aria-live="polite">
+<h2>Almost done</h2>
+<p style="margin:0;color:var(--muted)">Check the details, then tap the green button to send them to the school on WhatsApp. Your registration is complete once you press send in WhatsApp.</p>
+<div class="sum" id="sum"></div>
+<div class="stack">
+<a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Send on WhatsApp</a>
+<button class="btn ghost" type="button" id="copyBtn">Copy details</button>
+<button class="btn ghost" type="button" id="editBtn">Edit details</button>
+</div>
+<p class="note" id="copyNote">If WhatsApp doesn't open, copy the details and send them to 88990 08808.</p>
+</section>
+</div>
+</main>
+<footer>EuroValley International School, Kreeri, Baramulla · Call or WhatsApp 88990 08808</footer>
+
+<script>
+{
+const NUM='918899008808';
+const $=id=>document.getElementById(id);
+const classes=['1st','2nd','3rd','4th','5th','6th','7th','8th'];
+$('classOpts').innerHTML=classes.map(c=>`<label class="opt"><input type="radio" name="cls" value="${c}"><span>${c}</span></label>`).join('');
+const skillList=['Spoken English','Mental Math','Reading Club','Intro to Coding','Basics of AI','Spelling Bee & Quiz','Manners & Etiquette'];
+$('skillOpts').innerHTML=skillList.map(s=>`<label class="opt"><input type="checkbox" name="skill" value="${s.replace('&','&amp;')}"><span>${s.replace('&','&amp;')}</span></label>`).join('');
+const skills=()=>[...document.querySelectorAll('input[name=skill]:checked')].map(i=>i.value);
+const wsOn=()=>!!document.querySelector('input[name=prog][value^="Winter"]:checked');
+const syncSkills=()=>{$('skillWrap').hidden=!wsOn()};
+document.querySelectorAll('input[name=prog]').forEach(i=>i.addEventListener('change',syncSkills));
+$('allSkills').addEventListener('change',e=>{document.querySelectorAll('input[name=skill]').forEach(i=>{i.checked=e.target.checked});$('skillWrap').classList.remove('bad')});
+document.getElementById('skillOpts').addEventListener('change',()=>{$('allSkills').checked=skills().length===skillList.length});
+syncSkills();
+const val=id=>$(id).value.trim();
+const radio=n=>(document.querySelector(`input[name=${n}]:checked`)||{}).value||'';
+const progs=()=>[...document.querySelectorAll('input[name=prog]:checked')].map(i=>i.value);
+const digits=s=>s.replace(/\D/g,'').replace(/^(91|0)(?=\d{10}$)/,'');
+document.querySelectorAll('input[name=trans]').forEach(r=>r.addEventListener('change',()=>{$('pickWrap').hidden=radio('trans')!=='Yes'}));
+
+const checks=[
+ ['sname',()=>val('sname')],['gender',()=>radio('gender')],['cls',()=>radio('cls')],
+ ['father',()=>val('father')],['phone',()=>digits(val('phone')).length===10],
+ ['addr',()=>val('addr')],['prog',()=>progs().length],['skill',()=>!wsOn()||skills().length],['trans',()=>radio('trans')],['agree',()=>$('agree').checked]
+];
+const wrapOf=k=>{const el=$(k)||document.querySelector(`input[name=${k}]`);return el.closest('.f')};
+document.getElementById('form').addEventListener('input',e=>{const f=e.target.closest('.f');if(f)f.classList.remove('bad')});
+
+let text='';
+$('form').addEventListener('submit',e=>{
+ e.preventDefault();
+ let first=null;
+ for(const [k,ok] of checks){const w=wrapOf(k);if(!ok()){w.classList.add('bad');first=first||w}else w.classList.remove('bad')}
+ const waw=$('wa').closest('.f'),wd=digits(val('wa'));
+ if(val('wa')&&wd.length!==10){waw.classList.add('bad');first=first||waw}else waw.classList.remove('bad');
+ $('errTop').style.display=first?'block':'none';
+ if(first){first.scrollIntoView({behavior:'smooth',block:'center'});return}
+ const dob=val('dob')?val('dob').split('-').reverse().join('/'):'';
+ const rows=[
+  ['Student',val('sname')],['Gender',radio('gender')],['Date of birth',dob],['Class',radio('cls')],['Current school',val('school')],
+  ['Father / guardian',val('father')],['Mother',val('mother')],['Mobile',digits(val('phone'))],['WhatsApp',wd],
+  ['Address',val('addr')],['Programmes',progs().join(', ')],['Skills',wsOn()?skills().join(', '):''],['Transport',radio('trans')+(radio('trans')==='Yes'&&val('pick')?` (pick-up: ${val('pick')})`:'')],
+  ['Notes',val('notes')]
+ ].filter(r=>r[1]);
+ const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ $('sum').innerHTML=rows.map(([k,v])=>`<div><b>${k}</b><span>${esc(v)}</span></div>`).join('');
+ text='*Winter School 2026 Registration*\nEuroValley International School, Kreeri\n\n'+rows.map(([k,v])=>`${k}: ${v}`).join('\n');
+ $('waBtn').href=`https://wa.me/${NUM}?text=${encodeURIComponent(text)}`;
+ $('form').style.display='none';$('done').style.display='block';
+ $('done').scrollIntoView({behavior:'smooth',block:'start'});
+});
+$('editBtn').addEventListener('click',()=>{$('done').style.display='none';$('form').style.display='block';$('form').scrollIntoView({behavior:'smooth'})});
+$('copyBtn').addEventListener('click',async()=>{
+ try{await navigator.clipboard.writeText(text);$('copyNote').textContent='Details copied. Paste them in WhatsApp to 88990 08808.'}
+ catch(_){$('copyNote').textContent='Copy is not available here. Please take a screenshot and send it to 88990 08808.'}
+});
+}
+</script>
+</body>
+</html>
